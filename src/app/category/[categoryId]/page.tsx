@@ -1,5 +1,6 @@
 import React from "react";
 import SortProducts from "./SortProducts";
+import { notFound } from "next/navigation";
 
 export const instant = false;
 
@@ -30,17 +31,15 @@ interface Product {
   change: ProductChange;
 }
 
-const CategoryDetails = async ({
-  params,
-}: CategoryDetailsProps) => {
+const CategoryDetails = async ({ params }: CategoryDetailsProps) => {
   const { categoryId } = await params;
 
-const res = await fetch(
-  `https://openapi.programming-hero.com/api/bazardor/products?category=${encodeURIComponent(categoryId)}`,
-  {
-    next: { revalidate: 300 },
-  }
-);
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/bazardor/products?category=${encodeURIComponent(categoryId)}`,
+    {
+      next: { revalidate: 300 },
+    },
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch category products");
@@ -50,7 +49,9 @@ const res = await fetch(
 
   const toBanglaNumber = (number: number): string =>
     number.toLocaleString("bn-BD");
-
+  if (!data || data.length === 0) {
+    notFound();
+  }
   return (
     <div className="mx-auto w-full max-w-7xl px-3 py-4 sm:px-5 sm:py-6 lg:px-8">
       {/* Category Header */}

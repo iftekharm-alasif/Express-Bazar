@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="mt-16 border-t border-gray-200 bg-white">
+    <footer className="border-t border-gray-200 bg-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-5 py-8 sm:flex-row sm:justify-between sm:px-8">
         <Link
           href="/"

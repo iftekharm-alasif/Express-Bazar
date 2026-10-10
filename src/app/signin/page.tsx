@@ -14,11 +14,11 @@ type SignInFormData = {
 type SocialProvider = "google" | "github";
 
 const SignInPage = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] =
     useState<SocialProvider | null>(null);
 
-  const handelingSignIn = async (
+  const handleSignIn = async (
     e: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
@@ -33,22 +33,20 @@ const SignInPage = () => {
     setIsLoading(true);
 
     try {
-      const { data, error } = await authClient.signIn.email({
+      const { error } = await authClient.signIn.email({
         email: user.email,
         password: user.password,
         callbackURL: "/",
       });
 
       if (error) {
-        toast.error(error.message);
+        toast.error(error.message || "Sign-in failed. Please try again.");
         return;
       }
 
-      if (data) {
-        toast.success("Sign-in successful!");
+      toast.success("Sign-in successful!");
 
-        window.location.href = "/";
-      }
+      window.location.assign("/");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -68,7 +66,7 @@ const SignInPage = () => {
       });
 
       if (error) {
-        toast.error(error.message);
+        toast.error(error.message || `${provider} sign-in failed.`);
         setSocialLoading(null);
       }
     } catch {
@@ -97,7 +95,7 @@ const SignInPage = () => {
           </p>
         </div>
 
-        <form onSubmit={handelingSignIn} className="space-y-5">
+        <form onSubmit={handleSignIn} className="space-y-5">
           <div>
             <label
               htmlFor="email"
