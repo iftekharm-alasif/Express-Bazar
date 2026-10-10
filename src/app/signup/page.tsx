@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { authClient } from "../lib/auth-client";
 import toast from "react-hot-toast";
+import { Home, ArrowLeft } from "lucide-react";
 
 type SignUpFormData = {
   name: string;
@@ -17,12 +18,11 @@ type SocialProvider = "google" | "github";
 
 const SignUpPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] =
-    useState<SocialProvider | null>(null);
+  const [socialLoading, setSocialLoading] = useState<SocialProvider | null>(
+    null,
+  );
 
-  const handleSignUp = async (
-    e: FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -81,15 +81,17 @@ const SignUpPage = () => {
   };
 
   return (
-    <main className="flex min-h-[80vh] items-center justify-center bg-gray-50 px-4 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-lg shadow-gray-200/50 sm:p-8">
+    <main className="flex min-h-[80vh] items-center justify-center bg-gray-50 px-4 py-10 sm:py-12">
+      <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-5 shadow-lg shadow-gray-200/50 sm:p-8">
+        {/* Brand */}
         <Link
           href="/"
-          className="mb-8 block text-center text-2xl font-bold text-gray-900"
+          className="mb-8 block text-center text-2xl font-bold tracking-tight text-gray-900"
         >
           Express <span className="text-[#008744]">Bazar</span>
         </Link>
 
+        {/* Heading */}
         <div className="mb-7 text-center">
           <h1 className="text-2xl font-bold text-gray-900">
             Create an Account
@@ -100,6 +102,7 @@ const SignUpPage = () => {
           </p>
         </div>
 
+        {/* Sign Up Form */}
         <form onSubmit={handleSignUp} className="space-y-5">
           <div>
             <label
@@ -117,7 +120,7 @@ const SignUpPage = () => {
               autoComplete="name"
               required
               disabled={isLoading || socialLoading !== null}
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:opacity-60"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition duration-200 placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:cursor-not-allowed disabled:opacity-60"
             />
           </div>
 
@@ -137,7 +140,7 @@ const SignUpPage = () => {
               autoComplete="email"
               required
               disabled={isLoading || socialLoading !== null}
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:opacity-60"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition duration-200 placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:cursor-not-allowed disabled:opacity-60"
             />
           </div>
 
@@ -158,7 +161,7 @@ const SignUpPage = () => {
               minLength={8}
               required
               disabled={isLoading || socialLoading !== null}
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:opacity-60"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition duration-200 placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:cursor-not-allowed disabled:opacity-60"
             />
           </div>
 
@@ -168,7 +171,7 @@ const SignUpPage = () => {
               className="mb-2 block text-sm font-medium text-gray-700"
             >
               Profile Image{" "}
-              <span className="text-gray-400">(Optional)</span>
+              <span className="font-normal text-gray-400">(Optional)</span>
             </label>
 
             <input
@@ -177,14 +180,15 @@ const SignUpPage = () => {
               type="url"
               placeholder="https://example.com/profile.jpg"
               disabled={isLoading || socialLoading !== null}
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:opacity-60"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition duration-200 placeholder:text-gray-400 focus:border-[#008744] focus:bg-white focus:ring-4 focus:ring-green-100 disabled:cursor-not-allowed disabled:opacity-60"
             />
 
-            <p className="mt-2 text-xs text-gray-400">
+            <p className="mt-2 text-xs leading-relaxed text-gray-400">
               চাইলে আপনার profile image-এর link দিতে পারেন।
             </p>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading || socialLoading !== null}
@@ -201,17 +205,20 @@ const SignUpPage = () => {
           </button>
         </form>
 
+        {/* Divider */}
         <div className="my-6 flex items-center gap-4">
           <div className="h-px flex-1 bg-gray-200" />
 
-          <span className="text-xs font-medium text-gray-400">
+          <span className="text-xs font-medium tracking-wide text-gray-400">
             OR SIGN UP WITH
           </span>
 
           <div className="h-px flex-1 bg-gray-200" />
         </div>
 
+        {/* Social Sign Up */}
         <div className="space-y-3">
+          {/* Google */}
           <button
             type="button"
             onClick={() => handleSocialSignUp("google")}
@@ -245,10 +252,10 @@ const SignUpPage = () => {
                 />
               </svg>
             )}
-
             Continue with Google
           </button>
 
+          {/* GitHub */}
           <button
             type="button"
             onClick={() => handleSocialSignUp("github")}
@@ -268,11 +275,11 @@ const SignUpPage = () => {
                 <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.67-3.76-1.32-3.76-1.32-.5-1.28-1.23-1.62-1.23-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15.99 1.7 2.6 1.21 3.23.93.1-.72.39-1.21.71-1.49-2.47-.28-5.07-1.23-5.07-5.49 0-1.21.43-2.2 1.15-2.97-.12-.28-.5-1.41.11-2.94 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.53.23 2.66.11 2.94.72.77 1.15 1.76 1.15 2.97 0 4.27-2.6 5.2-5.08 5.48.4.35.76 1.02.76 2.06v3.08c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
               </svg>
             )}
-
             Continue with GitHub
           </button>
         </div>
 
+        {/* Sign In Link */}
         <p className="mt-7 text-center text-sm text-gray-500">
           ইতিমধ্যে অ্যাকাউন্ট আছে?{" "}
           <Link
@@ -283,9 +290,24 @@ const SignUpPage = () => {
           </Link>
         </p>
 
-        <p className="mt-6 text-center text-xs text-gray-400">
-          প্রতিদিনের বাজারদর, এক জায়গায়।
-        </p>
+        {/* Back to Home */}
+        <div className="mt-6 border-t border-gray-100 pt-5">
+          <Link
+            href="/"
+            className="group flex w-full items-center justify-center gap-2.5 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-[#008744]/30 hover:bg-green-50 hover:text-[#008744] active:scale-[0.99]"
+          >
+            <Home
+              size={17}
+              className="transition-transform duration-200 group-hover:scale-110"
+            />
+            <ArrowLeft
+              size={17}
+              className="transition-transform duration-200 group-hover:-translate-x-1"
+            />
+
+            <span>হোম পেজে ফিরে যান</span>
+          </Link>
+        </div>
       </div>
     </main>
   );
