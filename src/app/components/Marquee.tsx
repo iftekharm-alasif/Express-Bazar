@@ -3,9 +3,10 @@
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface Product {
-  id: string;
+  id: number;
   nameBn: string;
   image: string;
   today: number;
@@ -22,7 +23,7 @@ const Marquee = () => {
     const getProducts = async () => {
       try {
         const res = await fetch(
-          "https://api.api-store.workers.dev/api/bazardor/products"
+          "https://api.api-store.workers.dev/api/bazardor/products",
         );
 
         if (!res.ok) {
@@ -48,9 +49,10 @@ const Marquee = () => {
             const isDown = product.change.dir.toLowerCase() === "down";
 
             return (
-              <span
+              <Link
                 key={product.id}
-               className="mr-5 inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-xl border border-transparent px-2  text-sm font-medium text-gray-700 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-green-300 hover:bg-green-50 hover:text-green-800 hover:shadow-lg sm:mr-8 sm:text-base"
+                href={`/details/${product.id}`}
+                className="mr-5 inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-xl border border-transparent px-2 text-sm font-medium text-gray-700 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-green-300 hover:bg-green-50 hover:text-green-800 hover:shadow-lg sm:mr-8 sm:text-base"
               >
                 <span className="text-lg transition-transform duration-300 hover:scale-110">
                   {product.image}
@@ -84,6 +86,7 @@ const Marquee = () => {
                       width="35"
                       viewBox="0 -960 960 960"
                       fill="currentColor"
+                      aria-hidden="true"
                     >
                       <path d="m280-400 200-200 200 200H280Z" />
                     </svg>
@@ -94,6 +97,7 @@ const Marquee = () => {
                       width="35"
                       viewBox="0 -960 960 960"
                       fill="currentColor"
+                      aria-hidden="true"
                     >
                       <path d="M480-360 280-560h400L480-360Z" />
                     </svg>
@@ -101,7 +105,7 @@ const Marquee = () => {
 
                   {product.change.pct.toLocaleString("bn-BD")}%
                 </span>
-              </span>
+              </Link>
             );
           })}
         </div>

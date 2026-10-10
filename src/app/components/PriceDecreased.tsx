@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const PriceDecreased = async () => {
   const res = await fetch(
     "https://api.api-store.workers.dev/api/bazardor/products",
@@ -19,32 +21,31 @@ const PriceDecreased = async () => {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       {/* শিরোনাম */}
-<div className="mb-6">
-  <h2 className="flex items-center gap-2 text-xl font-bold text-gray-900 sm:text-2xl">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="35"
-      height="35"
-      viewBox="0 -960 960 960"
-      fill="currentColor"
-      className="shrink-0 text-green-600"
-      aria-hidden="true"
-    >
-      <path d="m280-560 200 200 200-200H280Z" />
-    </svg>
+      <div className="mb-6">
+        <h2 className="flex items-center gap-2 text-xl font-bold text-gray-900 sm:text-2xl">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="35"
+            height="35"
+            viewBox="0 -960 960 960"
+            fill="currentColor"
+            className="shrink-0 text-green-600"
+            aria-hidden="true"
+          >
+            <path d="m280-560 200 200 200-200H280Z" />
+          </svg>
 
-    আজকে যেসব পণ্যের দাম কমেছে
-  </h2>
-
-  
-</div>
+          আজকে যেসব পণ্যের দাম কমেছে
+        </h2>
+      </div>
 
       {/* পণ্যের কার্ড */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {decreasedProducts.map((incpro) => (
-          <div
+          <Link
             key={incpro.id}
-            className="group relative flex min-h-[210px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-lg sm:p-5"
+            href={`/details/${incpro.id}`}
+            className="group relative flex min-h-[210px] cursor-pointer flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-lg sm:p-5"
           >
             {/* পণ্যের তথ্য */}
             <div className="flex items-start gap-3">
@@ -71,8 +72,6 @@ const PriceDecreased = async () => {
                 <span className="text-3xl font-bold tracking-tight text-gray-900">
                   ৳{toBanglaNumber(incpro.today)}
                 </span>
-
-               
               </div>
             </div>
 
@@ -104,7 +103,7 @@ const PriceDecreased = async () => {
                 </span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

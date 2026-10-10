@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const SortProducts = ({ data }) => {
@@ -49,9 +50,10 @@ const SortProducts = ({ data }) => {
       {/* Sorted Products */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:gap-5">
         {sortedProducts.map((product) => (
-          <div
+          <Link
             key={product.id}
-            className="group relative flex min-h-[165px] flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-lg sm:min-h-[180px] sm:rounded-2xl sm:p-4 lg:p-5"
+            href={`/details/${product.id}`}
+            className="group relative flex min-h-[165px] cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-lg sm:min-h-[180px] sm:rounded-2xl sm:p-4 lg:p-5"
           >
             {/* Product Information */}
             <div className="flex items-start gap-3">
@@ -110,7 +112,7 @@ const SortProducts = ({ data }) => {
                 </span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

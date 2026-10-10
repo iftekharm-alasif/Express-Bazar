@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { connection } from "next/server";
+import Link from "next/link";
+import ScrollToProducts from "./ScrollToProducts";
 
 const TodayMarket = async () => {
   await connection();
@@ -10,7 +12,7 @@ const TodayMarket = async () => {
   });
 
   return (
-    <section className="mt-10 p-0">
+    <section  className="mt-10 p-0">
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-8 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm sm:p-10 md:flex-row md:p-12">
         {/* Left Side: Text Section */}
         <div className="flex-1 space-y-5">
@@ -31,11 +33,9 @@ const TodayMarket = async () => {
           </p>
 
           {/* Button */}
-          <div className="pt-2">
-            <button className="group rounded-xl bg-[#008744] px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-green-900/10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#007038] hover:shadow-lg hover:shadow-green-900/20 active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008744]">
-              সব পণ্য দেখুন
-            </button>
-          </div>
+          <div  className="pt-2">
+  <ScrollToProducts />
+</div>
         </div>
 
         {/* Right Side: Image Section */}
