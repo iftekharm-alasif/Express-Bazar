@@ -35,12 +35,12 @@ const CategoryDetails = async ({
 }: CategoryDetailsProps) => {
   const { categoryId } = await params;
 
-  const res = await fetch(
-    `https://api.api-store.workers.dev/api/bazardor/products?category=${categoryId}`,
-    {
-      next: { revalidate: 300 },
-    },
-  );
+const res = await fetch(
+  `https://openapi.programming-hero.com/api/bazardor/products?category=${encodeURIComponent(categoryId)}`,
+  {
+    next: { revalidate: 300 },
+  }
+);
 
   if (!res.ok) {
     throw new Error("Failed to fetch category products");
