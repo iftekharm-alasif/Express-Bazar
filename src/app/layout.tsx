@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import TodayMarket from "./components/TodayMarket";
 import Marquee from "./components/Marquee";
 import Footer from "./components/Footer";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
 
        <Footer></Footer>
+       <Toaster></Toaster>
       </body>
     </html>
   );
