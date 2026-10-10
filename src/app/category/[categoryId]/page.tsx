@@ -1,17 +1,54 @@
 import React from "react";
-export const instant = false;
 import SortProducts from "./SortProducts";
 
-const CategoryDetails = async ({ params }) => {
+export const instant = false;
+
+interface CategoryDetailsProps {
+  params: Promise<{
+    categoryId: string;
+  }>;
+}
+
+interface ProductChange {
+  dir: "up" | "down" | "same";
+  pct: number;
+}
+
+interface Product {
+  id: number;
+  slug: string;
+  nameBn: string;
+  category: string;
+  categoryNameBn: string;
+  categoryIcon: string;
+  unit: string;
+  image: string;
+  today: number;
+  yesterday: number;
+  lastWeek: number;
+  lastMonth: number;
+  change: ProductChange;
+}
+
+const CategoryDetails = async ({
+  params,
+}: CategoryDetailsProps) => {
   const { categoryId } = await params;
 
   const res = await fetch(
     `https://api.api-store.workers.dev/api/bazardor/products?category=${categoryId}`,
+    {
+      next: { revalidate: 300 },
+    },
   );
 
-  const data = await res.json();
+  if (!res.ok) {
+    throw new Error("Failed to fetch category products");
+  }
 
-  const toBanglaNumber = (number: number) =>
+  const data: Product[] = await res.json();
+
+  const toBanglaNumber = (number: number): string =>
     number.toLocaleString("bn-BD");
 
   return (
@@ -32,9 +69,8 @@ const CategoryDetails = async ({ params }) => {
           </h4>
         </div>
       </div>
- {
-    <SortProducts data={data} />
- }
+
+      <SortProducts data={data} />
     </div>
   );
 };

@@ -5,22 +5,24 @@ import "react-marquee-text/dist/styles.css";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
+interface ProductChange {
+  dir: "up" | "down" | "same";
+  pct: number;
+}
+
 interface Product {
   id: number;
   nameBn: string;
   image: string;
   today: number;
-  change: {
-    dir: string;
-    pct: number;
-  };
+  change: ProductChange;
 }
 
 const Marquee = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getProducts = async (): Promise<void> => {
       try {
         const res = await fetch(
           "https://api.api-store.workers.dev/api/bazardor/products",
@@ -30,9 +32,9 @@ const Marquee = () => {
           throw new Error("Failed to fetch products");
         }
 
-        const data = await res.json();
+        const data: Product[] = await res.json();
         setProducts(data);
-      } catch (error) {
+      } catch (error: unknown) {
         console.error("Product fetch error:", error);
       }
     };
@@ -45,8 +47,8 @@ const Marquee = () => {
       <MarqueeText direction="right" duration={8}>
         <div className="flex items-center">
           {products.map((product) => {
-            const isUp = product.change.dir.toLowerCase() === "up";
-            const isDown = product.change.dir.toLowerCase() === "down";
+            const isUp = product.change.dir === "up";
+            const isDown = product.change.dir === "down";
 
             return (
               <Link

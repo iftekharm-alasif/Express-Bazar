@@ -45,16 +45,13 @@ const Page = async ({ params }: Props) => {
 
   const data: Product[] = await res.json();
 
-  const product = data.find(
-    (item) => item.id === Number(detailsId),
-  );
+  const product = data.find((item) => item.id === Number(detailsId));
 
   if (!product) {
     notFound();
   }
 
-  const toBanglaNumber = (number: number) =>
-    number.toLocaleString("bn-BD");
+  const toBanglaNumber = (number: number) => number.toLocaleString("bn-BD");
 
   const markets = product.markets ?? [];
 
@@ -68,14 +65,12 @@ const Page = async ({ params }: Props) => {
 
   const averagePrice = markets.length
     ? markets.reduce(
-        (total, market) =>
-          total + (market.min + market.max) / 2,
+        (total, market) => total + (market.min + market.max) / 2,
         0,
       ) / markets.length
     : 0;
 
-  const unitName =
-    product.unit === "kg" ? "কেজি" : product.unit;
+  const unitName = product.unit === "kg" ? "কেজি" : product.unit;
 
   return (
     <main className="min-h-screen bg-gray-50/80">
@@ -143,12 +138,7 @@ const Page = async ({ params }: Props) => {
                         : "দামের পরিবর্তন নেই"}
                   </span>
 
-                  <span>
-                    {toBanglaNumber(
-                      Math.abs(product.change.pct),
-                    )}
-                    %
-                  </span>
+                  <span>{toBanglaNumber(Math.abs(product.change.pct))}%</span>
                 </div>
               </div>
             </div>
@@ -197,9 +187,7 @@ const Page = async ({ params }: Props) => {
                     </div>
                   </div>
 
-                  <p className="mt-3 text-xs text-gray-400">
-                    প্রতি {unitName}
-                  </p>
+                  <p className="mt-3 text-xs text-gray-400">প্রতি {unitName}</p>
                 </div>
 
                 {/* Lowest Price */}
@@ -233,9 +221,7 @@ const Page = async ({ params }: Props) => {
                     </div>
                   </div>
 
-                  <p className="mt-3 text-xs text-gray-400">
-                    প্রতি {unitName}
-                  </p>
+                  <p className="mt-3 text-xs text-gray-400">প্রতি {unitName}</p>
                 </div>
 
                 {/* Average Price */}
@@ -270,9 +256,7 @@ const Page = async ({ params }: Props) => {
                     </div>
                   </div>
 
-                  <p className="mt-3 text-xs text-gray-400">
-                    প্রতি {unitName}
-                  </p>
+                  <p className="mt-3 text-xs text-gray-400">প্রতি {unitName}</p>
                 </div>
               </div>
             </div>
@@ -340,8 +324,6 @@ const Page = async ({ params }: Props) => {
                         </p>
                       </div>
                     </div>
-
-                  
                   </div>
 
                   <div className="mt-5 grid grid-cols-2 gap-3 border-t border-gray-100 pt-4">
@@ -367,29 +349,33 @@ const Page = async ({ params }: Props) => {
                   </div>
 
                   <div className="mt-4 flex items-center justify-between gap-2">
-                    <p className="text-xs text-gray-400">
-                      প্রতি {unitName}
-                    </p>
+                    <p className="text-xs text-gray-400">প্রতি {unitName}</p>
 
-                 <Link href={'/'}>
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-green-700 transition-transform group-hover:translate-x-0.5">
-                      Express Bazar
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
-                      </svg>
-                    </span></Link>
+                    <Link
+                      href="/"
+                      className="group inline-flex items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-600"
+                    >
+                      <span className="relative inline-flex items-center gap-1 text-xs font-semibold text-green-700 transition-colors duration-300 group-hover:text-green-900">
+                        Express Bazar
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                          className="transition-transform duration-300 ease-out group-hover:translate-x-1"
+                        >
+                          <path d="M5 12h14" />
+                          <path d="m12 5 7 7-7 7" />
+                        </svg>
+                        <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-green-700 transition-all duration-300 group-hover:w-full" />
+                      </span>
+                    </Link>
                   </div>
                 </article>
               ))}
@@ -409,10 +395,9 @@ const Page = async ({ params }: Props) => {
         {/* Footer Note */}
         <div className="mt-6 rounded-xl border border-gray-200 bg-white px-4 py-4 sm:px-5">
           <p className="text-xs leading-5 text-gray-500 sm:text-sm">
-            <span className="font-semibold text-gray-700">
-              দ্রষ্টব্য:
-            </span>{" "}
-            বাজারভেদে পণ্যের দাম পরিবর্তিত হতে পারে। কেনার আগে সংশ্লিষ্ট বাজারে দাম যাচাই করে নিন।
+            <span className="font-semibold text-gray-700">দ্রষ্টব্য:</span>{" "}
+            বাজারভেদে পণ্যের দাম পরিবর্তিত হতে পারে। কেনার আগে সংশ্লিষ্ট বাজারে
+            দাম যাচাই করে নিন।
           </p>
         </div>
       </section>

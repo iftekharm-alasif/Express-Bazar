@@ -1,5 +1,26 @@
 import Link from "next/link";
 
+interface ProductChange {
+  dir: "up" | "down" | "same";
+  pct: number;
+}
+
+interface Product {
+  id: number;
+  slug: string;
+  nameBn: string;
+  category: string;
+  categoryNameBn: string;
+  categoryIcon: string;
+  unit: string;
+  image: string;
+  today: number;
+  yesterday: number;
+  lastWeek: number;
+  lastMonth: number;
+  change: ProductChange;
+}
+
 const PriceIncreased = async () => {
   const res = await fetch(
     "https://api.api-store.workers.dev/api/bazardor/products",
@@ -8,9 +29,13 @@ const PriceIncreased = async () => {
     },
   );
 
-  const data = await res.json();
+  if (!res.ok) {
+    throw new Error("Failed to fetch products");
+  }
 
-  const toBanglaNumber = (number: number) =>
+  const data: Product[] = await res.json();
+
+  const toBanglaNumber = (number: number): string =>
     number.toLocaleString("bn-BD");
 
   const increasedProducts = data
@@ -45,7 +70,7 @@ const PriceIncreased = async () => {
           <Link
             key={incpro.id}
             href={`/details/${incpro.id}`}
-            className="group relative flex min-h-[210px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-lg sm:p-5"
+            className="group relative flex min-h-[210px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg sm:p-5"
           >
             {/* পণ্যের তথ্য */}
             <div className="flex items-start gap-3">

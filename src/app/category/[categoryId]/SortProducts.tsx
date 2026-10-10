@@ -3,8 +3,35 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const SortProducts = ({ data }) => {
-  const [sortOrder, setSortOrder] = useState("default");
+type SortOrder = "default" | "low-to-high" | "high-to-low";
+
+interface ProductChange {
+  dir: "up" | "down" | "same";
+  pct: number;
+}
+
+interface Product {
+  id: number;
+  slug: string;
+  nameBn: string;
+  category: string;
+  categoryNameBn: string;
+  categoryIcon: string;
+  unit: string;
+  image: string;
+  today: number;
+  yesterday: number;
+  lastWeek: number;
+  lastMonth: number;
+  change: ProductChange;
+}
+
+interface SortProductsProps {
+  data: Product[];
+}
+
+const SortProducts = ({ data }: SortProductsProps) => {
+  const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
   const sortedProducts = [...data].sort((a, b) => {
     if (sortOrder === "low-to-high") {
@@ -23,7 +50,7 @@ const SortProducts = ({ data }) => {
       {/* Sorting Section */}
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm font-medium text-gray-600">
-          মোট {data.length}টি পণ্য
+          মোট {data.length.toLocaleString("bn-BD")}টি পণ্য
         </p>
 
         <div className="flex items-center gap-2">
@@ -37,7 +64,7 @@ const SortProducts = ({ data }) => {
           <select
             id="sort"
             value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
+            onChange={(e) => setSortOrder(e.target.value as SortOrder)}
             className="max-w-[210px] cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm outline-none transition-all hover:border-green-400 focus:border-green-500 focus:ring-2 focus:ring-green-100"
           >
             <option value="default">ডিফল্ট</option>
@@ -74,12 +101,10 @@ const SortProducts = ({ data }) => {
 
             {/* Today's Price */}
             <div className="mt-3 sm:mt-5">
-              <p className="text-xs text-gray-500 sm:text-sm">
-                আজকের দাম
-              </p>
+              <p className="text-xs text-gray-500 sm:text-sm">আজকের দাম</p>
 
               <span className="mt-1 block text-xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                ৳{Number(product.today).toLocaleString("bn-BD")}
+                ৳{product.today.toLocaleString("bn-BD")}
               </span>
             </div>
 
@@ -91,24 +116,39 @@ const SortProducts = ({ data }) => {
                 </p>
 
                 <p className="mt-1 text-sm font-medium text-gray-600">
-                  ৳{Number(product.yesterday).toLocaleString("bn-BD")}
+                  ৳{product.yesterday.toLocaleString("bn-BD")}
                 </p>
               </div>
 
-              <div className="flex shrink-0 items-center gap-1 rounded-lg bg-green-50 px-2 py-1.5 text-green-600 sm:px-2.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 -960 960 960"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path d="m280-560 200 200 200-200H280Z" />
-                </svg>
+              <div
+                className={`flex shrink-0 items-center gap-1 rounded-lg px-2 py-1.5 sm:px-2.5 ${
+                  product.change.dir === "up"
+                    ? "bg-red-50 text-red-600"
+                    : product.change.dir === "down"
+                      ? "bg-green-50 text-green-600"
+                      : "bg-gray-100 text-gray-500"
+                }`}
+              >
+                {product.change.dir !== "same" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 -960 960 960"
+                    fill="currentColor"
+                    className={
+                      product.change.dir === "up" ? "rotate-180" : ""
+                    }
+                    aria-hidden="true"
+                  >
+                    <path d="m280-560 200 200 200-200H280Z" />
+                  </svg>
+                )}
 
                 <span className="text-xs font-bold sm:text-sm">
-                  {Number(product.change.pct).toLocaleString("bn-BD")}%
+                  {product.change.dir === "up" ? "+" : ""}
+                  {product.change.dir === "down" ? "−" : ""}
+                  {product.change.pct.toLocaleString("bn-BD")}%
                 </span>
               </div>
             </div>

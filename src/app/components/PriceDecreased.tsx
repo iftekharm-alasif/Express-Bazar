@@ -1,5 +1,26 @@
 import Link from "next/link";
 
+interface ProductChange {
+  dir: "up" | "down" | "same";
+  pct: number;
+}
+
+interface Product {
+  id: number;
+  slug: string;
+  nameBn: string;
+  category: string;
+  categoryNameBn: string;
+  categoryIcon: string;
+  unit: string;
+  image: string;
+  today: number;
+  yesterday: number;
+  lastWeek: number;
+  lastMonth: number;
+  change: ProductChange;
+}
+
 const PriceDecreased = async () => {
   const res = await fetch(
     "https://api.api-store.workers.dev/api/bazardor/products",
@@ -8,9 +29,13 @@ const PriceDecreased = async () => {
     },
   );
 
-  const data = await res.json();
+  if (!res.ok) {
+    throw new Error("Failed to fetch products");
+  }
 
-  const toBanglaNumber = (number: number) =>
+  const data: Product[] = await res.json();
+
+  const toBanglaNumber = (number: number): string =>
     number.toLocaleString("bn-BD");
 
   const decreasedProducts = data

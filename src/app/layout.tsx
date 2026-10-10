@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { Suspense } from "react";
 import TodayMarket from "./components/TodayMarket";
 import Marquee from "./components/Marquee";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,9 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
         <main className="flex-1">{children}</main>
 
-        {/* <Suspense fallback={null}>
-          <TodayMarket />
-        </Suspense> */}
+       <Footer></Footer>
       </body>
     </html>
   );

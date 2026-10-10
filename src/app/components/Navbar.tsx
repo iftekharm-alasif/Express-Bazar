@@ -11,7 +11,7 @@ const Navbar = async () => {
   });
 
   return (
-    <header className="w-full max-w-full border-b border-gray-200 bg-white shadow-sm">
+  <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white shadow-sm">
       {" "}
       <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 px-3 py-2 sm:px-6">
         {" "}
