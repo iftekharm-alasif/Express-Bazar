@@ -14,12 +14,13 @@ type SignInFormData = {
 type SocialProvider = "google" | "github";
 
 const SignInPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<SocialProvider | null>(
-    null,
-  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [socialLoading, setSocialLoading] =
+    useState<SocialProvider | null>(null);
 
-  const handelingSignIn = async (e: FormEvent<HTMLFormElement>) => {
+  const handelingSignIn = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -45,6 +46,7 @@ const SignInPage = () => {
 
       if (data) {
         toast.success("Sign-in successful!");
+
         window.location.href = "/";
       }
     } catch {
@@ -54,7 +56,9 @@ const SignInPage = () => {
     }
   };
 
-  const handleSocialSignIn = async (provider: SocialProvider) => {
+  const handleSocialSignIn = async (
+    provider: SocialProvider,
+  ): Promise<void> => {
     setSocialLoading(provider);
 
     try {
@@ -76,7 +80,6 @@ const SignInPage = () => {
   return (
     <main className="flex min-h-[80vh] items-center justify-center bg-gray-50 px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-lg shadow-gray-200/50 sm:p-8">
-        {/* Logo */}
         <Link
           href="/"
           className="mb-8 block text-center text-2xl font-bold text-gray-900"
@@ -84,16 +87,16 @@ const SignInPage = () => {
           Express <span className="text-[#008744]">Bazar</span>
         </Link>
 
-        {/* Heading */}
         <div className="mb-7 text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Welcome Back!</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Welcome Back!
+          </h1>
 
           <p className="mt-2 text-sm text-gray-500">
             আপনার অ্যাকাউন্টে লগইন করুন
           </p>
         </div>
 
-        {/* Email Sign In */}
         <form onSubmit={handelingSignIn} className="space-y-5">
           <div>
             <label
@@ -148,16 +151,17 @@ const SignInPage = () => {
             )}
           </button>
         </form>
-        {/* Divider */}
+
         <div className="my-6 flex items-center gap-4">
           <div className="h-px flex-1 bg-gray-200" />
+
           <span className="text-xs font-medium text-gray-400">
-            OR CONTINUE WITH EMAIL
+            OR CONTINUE WITH
           </span>
+
           <div className="h-px flex-1 bg-gray-200" />
         </div>
 
-        {/* Social Sign In */}
         <div className="space-y-3">
           <button
             type="button"
@@ -192,6 +196,7 @@ const SignInPage = () => {
                 />
               </svg>
             )}
+
             Continue with Google
           </button>
 
@@ -214,11 +219,11 @@ const SignInPage = () => {
                 <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.67-3.76-1.32-3.76-1.32-.5-1.28-1.23-1.62-1.23-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15.99 1.7 2.6 1.21 3.23.93.1-.72.39-1.21.71-1.49-2.47-.28-5.07-1.23-5.07-5.49 0-1.21.43-2.2 1.15-2.97-.12-.28-.5-1.41.11-2.94 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.53.23 2.66.11 2.94.72.77 1.15 1.76 1.15 2.97 0 4.27-2.6 5.2-5.08 5.48.4.35.76 1.02.76 2.06v3.08c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
               </svg>
             )}
+
             Continue with GitHub
           </button>
         </div>
 
-        {/* Sign Up Link */}
         <p className="mt-7 text-center text-sm text-gray-500">
           Don&apos;t have an account?{" "}
           <Link
