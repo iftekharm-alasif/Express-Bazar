@@ -4,7 +4,7 @@
 
 ## 🔗 Live & Relevant Links
 
-- **Live Website:** ---
+- **Live Website:** https://express-bazar.vercel.app/
 - **GitHub Repository:** https://github.com/iftekharm-alasif/express-bazar
 
 ## 🛠️ Technologies Used
