@@ -82,6 +82,8 @@ This project uses a REST API to fetch product, category, and market price data.
 `https://openapi.programming-hero.com/api/bazardor`
 
 
+⭐ Thanks for visiting **Express Bazar**!
+
 
 ## 👨‍💻 Author
 
@@ -92,4 +94,4 @@ This project uses a REST API to fetch product, category, and market price data.
 
 ---
 
-⭐ Thanks for visiting **Express Bazar**!
+
